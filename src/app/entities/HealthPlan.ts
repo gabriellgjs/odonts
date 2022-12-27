@@ -1,5 +1,6 @@
 export interface HealthPlanProps {
-  name?: string;
+  name: string;
+  descripition: string;
 }
 
 export class HealthPlan {
@@ -11,5 +12,13 @@ export class HealthPlan {
 
   set name(name: string) {
     this.props.name = name;
+  }
+
+  get descripition(): string {
+    return this.props.descripition;
+  }
+
+  set descripition(descripition: string) {
+    this.props.descripition = descripition;
   }
 }

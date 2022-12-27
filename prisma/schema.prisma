@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model HealthPlans {
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(100)
+  descripition  String    @db.VarChar(100)
+  patient       Patients[]
+}
+
+model Persons {
+  id            Int       @id @default(autoincrement())
+  status        String    @db.Char(1)
+  name          String    @db.VarChar(255)
+  birthDate     DateTime  @db.Date()
+  rg            String    @db.VarChar(10)
+  cpf           String    @db.VarChar(12)
+  street        String    @db.VarChar(255)
+  district      String    @db.VarChar(100)
+  city          String    @db.VarChar(100)
+  zipCode       String    @db.VarChar(50)
+  state         String    @db.VarChar(50)
+  telephone     String    @db.VarChar(20)
+  phoneMessage  String    @db.VarChar(20)
+  gender        String    @db.VarChar(100)
+  employee      Employees?
+  patient       Patients?
+  dentist       Dentists?
+}
+
+model Employees {
+  person          Persons        @relation(fields: [personId], references: [id])
+  personId        Int           @id @unique
+  email           String        @db.VarChar(255)
+  passoword       String        @db.VarChar(255)
+  admissionDate   DateTime      @db.Date()
+  shutdownDate    DateTime?     @db.Date()
+  appointment     Appointments[] 
+}
+
+model Patients {
+  person        Persons        @relation(fields: [personId], references: [id])
+  personId      Int           @id @unique
+  maritalStatus String        @db.VarChar(100)
+  healthPlan    HealthPlans?   @relation(fields: [healthPlanId], references: [id])
+  healthPlanId  Int
+  appointment   Appointments[] 
+}
+
+model Dentists {
+  person        Persons         @relation(fields: [personId], references: [id])
+  personId      Int            @id  @unique
+  specialist    String         @db.Text()
+  email         String         @db.VarChar(255)
+  passoword     String         @db.VarChar(255)
+  admissionDate DateTime       @db.Date()
+  shutdownDate  DateTime?      @db.Date()
+  appointments  Appointments[] 
+}
+
+model Appointments {
+  id                  Int           @id @default(autoincrement())
+  dentist             Dentists      @relation(fields: [dentistId], references: [personId])
+  dentistId           Int 
+  patient             Patients      @relation(fields: [patientId], references: [personId])
+  patientId           Int   
+  employee            Employees     @relation(fields: [employeeId], references: [personId])
+  employeeId          Int
+  scheduledAt         DateTime      @db.DateTime()
+  treatmentDuraction  DateTime?      @db.DateTime()
+  treatments    TreatmentOnAppointment[] 
+}
+
+model Treatments {
+  id                Int             @id @default(autoincrement())
+  name              String          @db.VarChar(100)
+  expected_duration DateTime        @db.DateTime()
+  appointments       TreatmentOnAppointment[]  
+}
+
+model TreatmentOnAppointment {
+  appointment     Appointments  @relation(fields: [appointmentId], references: [id])
+  appointmentId   Int
+  treatment       Treatments      @relation(fields: [treatmentId], references: [id])
+  treatmentId     Int
+  
+  @@id([appointmentId, treatmentId])
+}
+

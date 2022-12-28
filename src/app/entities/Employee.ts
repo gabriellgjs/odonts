@@ -10,6 +10,13 @@ export interface EmployeeProps extends PersonProps {
 export class Employee extends Person {
   protected props: EmployeeProps;
 
+  constructor(props: EmployeeProps) {
+    super();
+    this.props = {
+      ...props,
+    };
+  }
+
   get email(): string {
     return this.props.email;
   }

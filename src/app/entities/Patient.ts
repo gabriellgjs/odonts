@@ -4,11 +4,18 @@ import { Person, PersonProps } from './Person';
 export interface PatientProps extends PersonProps {
   profission: string;
   maritalStatus: string;
-  healthPlan: HealthPlan;
+  healthPlan?: HealthPlan;
 }
 
 export class Patient extends Person {
   protected props: PatientProps;
+
+  constructor(props: PatientProps) {
+    super();
+    this.props = {
+      ...props,
+    };
+  }
 
   get profission(): string {
     return this.props.profission;
@@ -28,9 +35,5 @@ export class Patient extends Person {
 
   get healthPlan(): HealthPlan {
     return this.props.healthPlan;
-  }
-
-  set healthPlan({}) {
-    this.props.healthPlan = new HealthPlan();
   }
 }

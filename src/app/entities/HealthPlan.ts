@@ -6,6 +6,12 @@ export interface HealthPlanProps {
 export class HealthPlan {
   private props: HealthPlanProps;
 
+  constructor(props: HealthPlanProps) {
+    this.props = {
+      ...props,
+    };
+  }
+
   get name(): string {
     return this.props.name;
   }

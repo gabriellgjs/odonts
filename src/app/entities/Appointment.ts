@@ -13,6 +13,12 @@ export interface AppointmentProps {
 export class Appointment {
   private props: AppointmentProps;
 
+  constructor(props: AppointmentProps) {
+    this.props = {
+      ...props,
+    };
+  }
+
   get employee(): Employee {
     return this.props.employee;
   }

@@ -31,9 +31,14 @@ model Persons {
   gender        String    @db.VarChar(100)
   employee      Employees?
   patient       Patients?
-  dentist       Dentists?
 }
 
+model Position {
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(100)
+  employees     Employees[]
+
+}
 model Employees {
   person Persons @relation(fields: [personId], references: [id])
   personId Int @id  @unique 
@@ -41,6 +46,8 @@ model Employees {
   passoword       String        @db.VarChar(255)
   admissionDate   DateTime      @db.Date()
   shutdownDate    DateTime?     @db.Date()
+  position        Position?     @relation(fields: [positionId], references: [id])
+  positionId      Int
   appointment     Appointments[] 
 }
 
@@ -53,21 +60,9 @@ model Patients {
   appointment   Appointments[] 
 }
 
-model Dentists {
-  persons        Persons       @relation(fields: [personId], references: [id])
-  personId      Int            @id 
-  specialist    String         @db.Text()
-  email         String         @db.VarChar(255)
-  passoword     String         @db.VarChar(255)
-  admissionDate DateTime       @db.Date()
-  shutdownDate  DateTime?      @db.Date()
-  appointments  Appointments[] 
-}
 
 model Appointments {
   id                  Int                       @id @default(autoincrement())
-  dentist             Dentists                  @relation(fields: [dentistId], references: [personId])
-  dentistId           Int 
   patient             Patients                  @relation(fields: [patientId], references: [personId])
   patientId           Int   
   employee            Employees                 @relation(fields: [employeeId], references: [personId])

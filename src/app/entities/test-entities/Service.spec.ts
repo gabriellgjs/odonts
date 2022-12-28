@@ -1,4 +1,4 @@
-import { Service } from '../Service';
+import { Service } from '../Treatment';
 
 describe('Service', () => {
   it('should be able to create a service', () => {

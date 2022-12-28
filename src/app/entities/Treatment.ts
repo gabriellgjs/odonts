@@ -1,12 +1,12 @@
-export interface ServiceProps {
+export interface TreatmentProps {
   name: string;
   expected_duration: number;
 }
 
-export class Service {
-  private props: ServiceProps;
+export class Treatment {
+  private props: TreatmentProps;
 
-  constructor(props: ServiceProps) {
+  constructor(props: TreatmentProps) {
     this.props = {
       ...props,
     };

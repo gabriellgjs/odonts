@@ -1,11 +1,11 @@
 import { Employee } from './Employee';
 import { Patient } from './Patient';
-import { Service } from './Service';
+import { Treatment } from './Treatment';
 
 export interface AppointmentProps {
   employee: Employee;
   patient: Patient;
-  service: Service;
+  treatment: Treatment;
   createdAt: Date;
   scheduledAt: Date;
 }
@@ -35,12 +35,12 @@ export class Appointment {
     this.props.patient = patient;
   }
 
-  get service(): Service {
-    return this.props.service;
+  get treatment(): Treatment {
+    return this.props.treatment;
   }
 
-  set service(service: Service) {
-    this.props.service = service;
+  set treatment(treatment: Treatment) {
+    this.props.treatment = treatment;
   }
 
   get createdAt(): Date {

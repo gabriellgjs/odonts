@@ -2,7 +2,7 @@ import { Appointment } from '../Appointment';
 import { Employee } from '../Employee';
 import { HealthPlan } from '../HealthPlan';
 import { Patient } from '../Patient';
-import { Service } from '../Service';
+import { Treatment } from '../Treatment';
 
 describe('Appointment', () => {
   it('should be able to create a Appointment', () => {
@@ -47,7 +47,7 @@ describe('Appointment', () => {
       }),
     });
 
-    const service = new Service({
+    const treatment = new Treatment({
       name: 'maintenance',
       expected_duration: 30,
     });
@@ -59,7 +59,7 @@ describe('Appointment', () => {
     const appointment = new Appointment({
       employee,
       patient,
-      service,
+      treatment,
       createdAt,
       scheduledAt,
     });

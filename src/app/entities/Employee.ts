@@ -5,7 +5,7 @@ export interface EmployeeProps extends PersonProps {
   passoword: string;
   admissionDate: Date;
   shutdownDate?: Date | null;
-  position: string;
+  position?: string;
 }
 
 export class Employee extends Person {
@@ -45,6 +45,7 @@ export class Employee extends Person {
   set shutdownDate(date: Date | null) {
     this.props.shutdownDate = date;
   }
+
   get position(): string {
     return this.props.position;
   }

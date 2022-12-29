@@ -7,69 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model HealthPlans {
-  id            Int       @id @default(autoincrement())
-  name          String    @db.VarChar(100)
-  descripition  String    @db.VarChar(100)
-  patient       Patients[]
-}
-
-model Persons {
-  id            Int       @id @default(autoincrement())
-  status        String    @db.Char(1)
-  name          String    @db.VarChar(255)
-  birthDate     DateTime  @db.Date()
-  rg            String    @db.VarChar(10)
-  cpf           String    @db.VarChar(12)
-  street        String    @db.VarChar(255)
-  district      String    @db.VarChar(100)
-  city          String    @db.VarChar(100)
-  zipCode       String    @db.VarChar(50)
-  state         String    @db.VarChar(50)
-  telephone     String    @db.VarChar(20)
-  phoneMessage  String    @db.VarChar(20)
-  gender        String    @db.VarChar(100)
-  employee      Employees?
-  patient       Patients?
-}
-
-model Position {
+model Roles {
   id            Int       @id @default(autoincrement())
   name          String    @db.VarChar(100)
   employees     Employees[]
-
-}
-model Employees {
-  person Persons @relation(fields: [personId], references: [id])
-  personId Int @id  @unique 
-  email           String        @db.VarChar(255)
-  passoword       String        @db.VarChar(255)
-  admissionDate   DateTime      @db.Date()
-  shutdownDate    DateTime?     @db.Date()
-  position        Position?     @relation(fields: [positionId], references: [id])
-  positionId      Int
-  appointment     Appointments[] 
-}
-
-model Patients {
-  persons        Persons       @relation(fields: [personId], references: [id])
-  personId      Int           @id
-  maritalStatus String        @db.VarChar(100)
-  healthPlan    HealthPlans?  @relation(fields: [healthPlanId], references: [id])
-  healthPlanId  Int
-  appointment   Appointments[] 
-}
-
-
-model Appointments {
-  id                  Int                       @id @default(autoincrement())
-  patient             Patients                  @relation(fields: [patientId], references: [personId])
-  patientId           Int   
-  employee            Employees                 @relation(fields: [employeeId], references: [personId])
-  employeeId          Int
-  scheduledAt         DateTime                  @db.DateTime()
-  treatmentDuraction  DateTime?                 @db.DateTime()
-  treatments          TreatmentOnAppointment[] 
 }
 
 model Treatments {
@@ -77,6 +18,85 @@ model Treatments {
   name              String                      @db.VarChar(100)
   expected_duration DateTime                    @db.DateTime()
   appointments       TreatmentOnAppointment[]  
+}
+
+model HealthPlans {
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(100)
+  descripition  String    @db.VarChar(100)
+  patient       Patients[]
+}
+
+model Andress {
+  id            Int       @id @default(autoincrement())
+  street        String    @db.VarChar(255)
+  district      String    @db.VarChar(100)
+  city          String    @db.VarChar(100)
+  zipCode       String    @db.VarChar(50)
+  state         String    @db.VarChar(50)
+  person        Persons?  @relation(fields: [personId], references: [id])
+  personId      Int
+}
+
+model Telephones {
+  id            Int       @id @default(autoincrement())
+  telephone     String    @db.VarChar(20)
+  person        Persons?  @relation(fields: [personId], references: [id])
+  personId      Int
+}
+
+model Persons {
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(255)
+  birthDate     DateTime  @db.Date()
+  rg            String    @db.VarChar(10)
+  cpf           String    @db.VarChar(12)
+  gender        String    @db.VarChar(100)
+  employee      Employees[]
+  patient       Patients[]
+  telephone     Telephones[]
+  andress       Andress[]
+}
+
+model Employees {
+  id              Int           @id @default(autoincrement())
+  admissionDate   DateTime      @db.Date()
+  shutdownDate    DateTime?     @db.Date()
+  role            Roles?        @relation(fields: [roleId], references: [id])
+  roleId          Int
+  appointment     Appointments[] 
+  user            Users[]
+  person          Persons?      @relation(fields: [personId], references: [id])
+  personId        Int           
+}
+
+model Patients {
+  id            Int             @id @default(autoincrement())  
+  maritalStatus String          @db.VarChar(100)
+  appointment   Appointments[]
+  healthPlan    HealthPlans?    @relation(fields: [healthPlanId], references: [id])
+  healthPlanId  Int
+  person        Persons?        @relation(fields: [personId], references: [id])
+  personId      Int    @unique
+}
+
+model Users {
+  id              Int           @id @default(autoincrement())
+  email           String        @db.VarChar(255)
+  passoword       String        @db.VarChar(255)
+  employee        Employees?    @relation(fields: [employeeId], references: [id])
+  employeeId      Int
+}
+
+model Appointments {
+  id                  Int                       @id @default(autoincrement())
+  patient             Patients                  @relation(fields: [patientId], references: [id])
+  patientId           Int   
+  employee            Employees                 @relation(fields: [employeeId], references: [id])
+  employeeId          Int
+  scheduledAt         DateTime                  @db.DateTime()
+  treatmentDuraction  DateTime?                 @db.DateTime()
+  treatments          TreatmentOnAppointment[] 
 }
 
 model TreatmentOnAppointment {

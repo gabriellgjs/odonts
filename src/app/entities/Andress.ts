@@ -9,6 +9,12 @@ interface AndressProps {
 export class Andress {
   private props: AndressProps;
 
+  constructor(props: AndressProps) {
+    this.props = {
+      ...props,
+    };
+  }
+
   get street(): string {
     return this.props.street;
   }

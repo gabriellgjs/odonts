@@ -7,102 +7,102 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Roles {
+model Cargos {
   id            Int       @id @default(autoincrement())
-  name          String    @db.VarChar(100)
-  employees     Employees[]
+  nome          String    @db.VarChar(100)
+  funcionario   Funcionarios[]
 }
 
-model Treatments {
+model Tratamentos {
   id                Int                         @id @default(autoincrement())
   name              String                      @db.VarChar(100)
-  expected_duration DateTime                    @db.DateTime()
-  appointments       TreatmentOnAppointment[]  
+  duracao_esperada  DateTime                    @db.DateTime()
+  agendamentos      TratamentoAgendamento[]  
 }
 
-model HealthPlans {
-  id            Int       @id @default(autoincrement())
-  name          String    @db.VarChar(100)
-  descripition  String    @db.VarChar(100)
-  patient       Patients[]
+model PlanosDeSaude {
+  id         Int       @id @default(autoincrement())
+  nome       String    @db.VarChar(100)
+  descricao  String    @db.VarChar(100)
+  paciente   Pacientes[]
 }
 
-model Andress {
-  id            Int       @id @default(autoincrement())
-  street        String    @db.VarChar(255)
-  district      String    @db.VarChar(100)
-  city          String    @db.VarChar(100)
-  zipCode       String    @db.VarChar(50)
-  state         String    @db.VarChar(50)
-  person        Persons?  @relation(fields: [personId], references: [id])
-  personId      Int
+model Enderecos {
+  id         Int       @id @default(autoincrement())
+  rua        String    @db.VarChar(255)
+  bairro     String    @db.VarChar(100)
+  cidade     String    @db.VarChar(100)
+  cep        String    @db.VarChar(50)
+  estado     String    @db.VarChar(50)
+  pessoa     Pessoas?  @relation(fields: [pessoaId], references: [id])
+  pessoaId   Int
 }
 
-model Telephones {
-  id            Int       @id @default(autoincrement())
-  telephone     String    @db.VarChar(20)
-  person        Persons?  @relation(fields: [personId], references: [id])
-  personId      Int
+model Telefones {
+  id           Int       @id @default(autoincrement())
+  telefone     String    @db.VarChar(20)
+  pessoa       Pessoas?  @relation(fields: [pessoaId], references: [id])
+  pessoaId     Int
 }
 
-model Persons {
-  id            Int       @id @default(autoincrement())
-  name          String    @db.VarChar(255)
-  birthDate     DateTime  @db.Date()
-  rg            String    @db.VarChar(10)
-  cpf           String    @db.VarChar(12)
-  gender        String    @db.VarChar(100)
-  employee      Employees[]
-  patient       Patients[]
-  telephone     Telephones[]
-  andress       Andress[]
+model Pessoas {
+  id              Int       @id @default(autoincrement())
+  nome            String    @db.VarChar(255)
+  dataNascimento  DateTime  @db.Date()
+  rg              String    @db.VarChar(10)
+  cpf             String    @db.VarChar(12)
+  genero          String    @db.VarChar(100)
+  funcionario     Funcionarios[]
+  paciente        Pacientes[]
+  telefone        Telefones[]
+  endereco        Enderecos[]
 }
 
-model Employees {
-  id              Int           @id @default(autoincrement())
-  admissionDate   DateTime      @db.Date()
-  shutdownDate    DateTime?     @db.Date()
-  role            Roles?        @relation(fields: [roleId], references: [id])
-  roleId          Int
-  appointment     Appointments[] 
-  user            Users[]
-  person          Persons?      @relation(fields: [personId], references: [id])
-  personId        Int           
+model Funcionarios {
+  id                 Int           @id @default(autoincrement())
+  dataAdmissao       DateTime      @db.Date()
+  dataDesligamento   DateTime?     @db.Date()
+  cargo              Cargos?        @relation(fields: [cargoId], references: [id])
+  cargoId            Int
+  agendamento        Agendamentos[] 
+  usuario            Usuarios[]
+  pessoa             Pessoas?  @relation(fields: [pessoaId], references: [id])
+  pessoaId           Int        
 }
 
-model Patients {
-  id            Int             @id @default(autoincrement())  
-  maritalStatus String          @db.VarChar(100)
-  appointment   Appointments[]
-  healthPlan    HealthPlans?    @relation(fields: [healthPlanId], references: [id])
-  healthPlanId  Int
-  person        Persons?        @relation(fields: [personId], references: [id])
-  personId      Int    @unique
+model Pacientes {
+  id              Int             @id @default(autoincrement())  
+  estadoCivil     String          @db.VarChar(100)
+  agendamento     Agendamentos[] 
+  planoDeSaude    PlanosDeSaude?    @relation(fields: [planoDeSaudeId], references: [id])
+  planoDeSaudeId  Int
+  pessoa          Pessoas?  @relation(fields: [pessoaId], references: [id])
+  pessoaId        Int   
 }
 
-model Users {
-  id              Int           @id @default(autoincrement())
-  email           String        @db.VarChar(255)
-  passoword       String        @db.VarChar(255)
-  employee        Employees?    @relation(fields: [employeeId], references: [id])
-  employeeId      Int
+model Usuarios {
+  id              Int             @id @default(autoincrement())
+  email           String          @db.VarChar(255)
+  senha           String          @db.VarChar(255)
+  funcionario     Funcionarios?   @relation(fields: [funcionarioId], references: [id])
+  funcionarioId   Int
 }
 
-model Appointments {
+model Agendamentos {
   id                  Int                       @id @default(autoincrement())
-  patient             Patients                  @relation(fields: [patientId], references: [id])
-  patientId           Int   
-  employee            Employees                 @relation(fields: [employeeId], references: [id])
-  employeeId          Int
-  scheduledAt         DateTime                  @db.DateTime()
-  treatmentDuraction  DateTime?                 @db.DateTime()
-  treatments          TreatmentOnAppointment[] 
+  paciente            Pacientes                 @relation(fields: [pacienteId], references: [id])
+  pacienteId          Int   
+  funcionario         Funcionarios              @relation(fields: [funcionarioId], references: [id])
+  funcionarioId       Int
+  agendadoPara        DateTime                  @db.DateTime()
+  duracaoAgendamento  DateTime?                 @db.DateTime()
+  tratamento          TratamentoAgendamento[] 
 }
 
-model TreatmentOnAppointment {
-  appointment      Appointments    @relation(fields: [appointmentId], references: [id])
-  appointmentId    Int
-  treatment        Treatments      @relation(fields: [treatmentId], references: [id])
-  treatmentId      Int
-  @@id([appointmentId, treatmentId])
+model TratamentoAgendamento {
+  agendamento      Agendamentos    @relation(fields: [agendamentoId], references: [id])
+  agendamentoId    Int
+  tratamento       Tratamentos     @relation(fields: [tratamentoId], references: [id])
+  tratamentoId      Int
+  @@id([agendamentoId, tratamentoId])
 }

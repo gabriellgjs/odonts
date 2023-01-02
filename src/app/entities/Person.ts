@@ -1,20 +1,18 @@
+import { Andress } from "./Andress";
+import { Telephone } from "./Telephone";
+
 export interface PersonProps {
   status: string;
   name: string;
   birthDate: Date;
   rg: string;
   cpf: string;
-  street: string;
-  district: string;
-  city: string;
-  zipCode: string;
-  state: string;
-  telephone: string;
-  phoneMessage: string;
+  telephone: Telephone;
+  andress: Andress;
   gender: string;
 }
 
-export class Person {
+export abstract class Person {
   protected props: PersonProps;
 
   get status(): string {
@@ -57,62 +55,21 @@ export class Person {
     this.props.cpf = cpf;
   }
 
-  get street(): string {
-    return this.props.street;
-  }
-
-  set street(street: string) {
-    this.props.street = street;
-  }
-
-  get district(): string {
-    return this.props.district;
-  }
-
-  set district(distritc: string) {
-    this.props.district = distritc;
-  }
-
-  get city(): string {
-    return this.props.city;
-  }
-
-  set city(city: string) {
-    this.props.city = city;
-  }
-
-  get zipCode(): string {
-    return this.props.zipCode;
-  }
-
-  set zipCode(zipCode: string) {
-    this.props.zipCode;
-  }
-
-  get state(): string {
-    return this.props.state;
-  }
-
-  set state(state: string) {
-    this.props.state = state;
-  }
-
-  get telephone(): string {
+  get telephone(): Telephone {
     return this.props.telephone;
   }
 
-  set telephone(telephone: string) {
+  set telephone(telephone: Telephone) {
     this.props.telephone = telephone;
   }
 
-  get phoneMessage(): string {
-    return this.props.phoneMessage;
+  get andress(): Andress {
+    return this.props.andress;
   }
 
-  set phoneMessage(phoneMessage: string) {
-    this.props.phoneMessage = phoneMessage;
+  set andress(andress: Andress) {
+    this.props.andress = andress;
   }
-
   get gender(): string {
     return this.props.gender;
   }

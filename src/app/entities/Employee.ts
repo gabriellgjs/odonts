@@ -1,8 +1,10 @@
 import { Person, PersonProps } from './Person';
+import { Role } from './Role';
+import { User } from './User';
 
 export interface EmployeeProps extends PersonProps {
-  email: string;
-  passoword: string;
+  user: User;
+  role: Role;
   admissionDate: Date;
   shutdownDate?: Date | null;
   position?: string;
@@ -18,16 +20,19 @@ export class Employee extends Person {
     };
   }
 
-  get email(): string {
-    return this.props.email;
+  get user(): User {
+    return this.props.user;
   }
 
-  set email(email: string) {
-    this.props.email = email;
+  set user(user: User) {
+    this.props.user = user;
+  }
+  get role(): Role {
+    return this.props.role;
   }
 
-  set passoword(passoword: string) {
-    this.props.passoword = passoword;
+  set role(role: Role) {
+    this.props.role = role;
   }
 
   get admissionDate(): Date {

@@ -1,5 +1,5 @@
-import { Andress } from "./Andress";
-import { Telephone } from "./Telephone";
+import { Andress } from './Andress';
+import { Telephone } from './Telephone';
 
 export interface PersonProps {
   status: string;

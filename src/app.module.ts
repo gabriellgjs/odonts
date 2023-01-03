@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DataBaseModule } from './infra/database/prisma/database.module';
+import { DataBaseModule } from './infra/database/database.module';
 import { HttpModule } from './infra/http/http.module';
 
 @Module({

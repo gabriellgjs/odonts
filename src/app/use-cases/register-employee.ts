@@ -7,7 +7,7 @@ import { User } from '../entities/User';
 import { EmployeesRepository } from '../repositories/employees-repository';
 
 interface RegisterEmployeeRequest {
-  status: string;
+  id: string;
   name: string;
   birthDate: Date;
   rg: string;
@@ -38,7 +38,7 @@ export class RegisterEmployee {
     request: RegisterEmployeeRequest,
   ): Promise<RegisterEmployeeResponse> {
     const {
-      status,
+      id,
       name,
       birthDate,
       rg,
@@ -58,7 +58,7 @@ export class RegisterEmployee {
     } = request;
 
     const employee = new Employee({
-      status,
+      id,
       name,
       birthDate,
       rg,

@@ -8,50 +8,50 @@ datasource db {
 }
 
 model Cargos {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @db.VarChar(72)
   nome          String    @db.VarChar(100)
   funcionario   Funcionarios[]
 }
 
 model Tratamentos {
-  id                Int                         @id @default(autoincrement())
-  name              String                      @db.VarChar(100)
-  duracao_esperada  DateTime                    @db.DateTime()
+  id                String       @id @db.VarChar(72)
+  name              String       @db.VarChar(100)
+  duracao_esperada  DateTime     @db.DateTime()
   agendamentos      TratamentoAgendamento[]  
 }
 
 model PlanosDeSaude {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @db.VarChar(72)
   nome       String    @db.VarChar(100)
   descricao  String    @db.VarChar(100)
   paciente   Pacientes[]
 }
 
 model Enderecos {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @db.VarChar(72)
   rua        String    @db.VarChar(255)
   bairro     String    @db.VarChar(100)
   cidade     String    @db.VarChar(100)
   cep        String    @db.VarChar(50)
   estado     String    @db.VarChar(50)
   pessoa     Pessoas?  @relation(fields: [pessoaId], references: [id])
-  pessoaId   Int
+  pessoaId   String
 }
 
 model Telefones {
-  id           Int       @id @default(autoincrement())
+  id           String    @id @db.VarChar(72)
   telefone     String    @db.VarChar(20)
   pessoa       Pessoas?  @relation(fields: [pessoaId], references: [id])
-  pessoaId     Int
+  pessoaId     String
 }
 
 model Pessoas {
-  id              Int       @id @default(autoincrement())
-  nome            String    @db.VarChar(255)
-  dataNascimento  DateTime  @db.Date()
-  rg              String    @db.VarChar(10)
-  cpf             String    @db.VarChar(12)
-  genero          String    @db.VarChar(100)
+  id              String          @id @db.VarChar(72)
+  nome            String          @db.VarChar(255)
+  dataNascimento  DateTime        @db.Date()
+  rg              String          @db.VarChar(10)
+  cpf             String          @db.VarChar(12)
+  genero          String          @db.VarChar(100)
   funcionario     Funcionarios[]
   paciente        Pacientes[]
   telefone        Telefones[]
@@ -59,41 +59,41 @@ model Pessoas {
 }
 
 model Funcionarios {
-  id                 Int           @id @default(autoincrement())
-  dataAdmissao       DateTime      @db.Date()
-  dataDesligamento   DateTime?     @db.Date()
+  id                 String         @id @db.VarChar(72)
+  dataAdmissao       DateTime       @db.Date()
+  dataDesligamento   DateTime?      @db.Date()
   cargo              Cargos?        @relation(fields: [cargoId], references: [id])
-  cargoId            Int
+  cargoId            String
   agendamento        Agendamentos[] 
   usuario            Usuarios[]
-  pessoa             Pessoas?  @relation(fields: [pessoaId], references: [id])
-  pessoaId           Int        
+  pessoa             Pessoas?       @relation(fields: [pessoaId], references: [id])
+  pessoaId           String        
 }
 
 model Pacientes {
-  id              Int             @id @default(autoincrement())  
+    id            String          @id @db.VarChar(72)
   estadoCivil     String          @db.VarChar(100)
   agendamento     Agendamentos[] 
-  planoDeSaude    PlanosDeSaude?    @relation(fields: [planoDeSaudeId], references: [id])
-  planoDeSaudeId  Int
-  pessoa          Pessoas?  @relation(fields: [pessoaId], references: [id])
-  pessoaId        Int   
+  planoDeSaude    PlanosDeSaude?  @relation(fields: [planoDeSaudeId], references: [id])
+  planoDeSaudeId  String
+  pessoa          Pessoas?        @relation(fields: [pessoaId], references: [id])
+  pessoaId        String   
 }
 
 model Usuarios {
-  id              Int             @id @default(autoincrement())
+    id            String          @id @db.VarChar(72)
   email           String          @db.VarChar(255)
   senha           String          @db.VarChar(255)
   funcionario     Funcionarios?   @relation(fields: [funcionarioId], references: [id])
-  funcionarioId   Int
+  funcionarioId   String
 }
 
 model Agendamentos {
-  id                  Int                       @id @default(autoincrement())
+  id                  String                    @id @db.VarChar(72)
   paciente            Pacientes                 @relation(fields: [pacienteId], references: [id])
-  pacienteId          Int   
+  pacienteId          String   
   funcionario         Funcionarios              @relation(fields: [funcionarioId], references: [id])
-  funcionarioId       Int
+  funcionarioId       String
   agendadoPara        DateTime                  @db.DateTime()
   duracaoAgendamento  DateTime?                 @db.DateTime()
   tratamento          TratamentoAgendamento[] 
@@ -101,8 +101,8 @@ model Agendamentos {
 
 model TratamentoAgendamento {
   agendamento      Agendamentos    @relation(fields: [agendamentoId], references: [id])
-  agendamentoId    Int
+  agendamentoId    String
   tratamento       Tratamentos     @relation(fields: [tratamentoId], references: [id])
-  tratamentoId      Int
+  tratamentoId     String
   @@id([agendamentoId, tratamentoId])
 }

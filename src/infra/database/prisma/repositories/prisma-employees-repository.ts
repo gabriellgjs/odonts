@@ -13,7 +13,7 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create(_employee: Employee): Promise<void> {
-    /* const person = PrismaPersonMapper.toPrisma(_employee);
+    const person = PrismaPersonMapper.toPrisma(_employee);
     const andress = PrismaAndressMapper.toPrisma(_employee);
     const telephone = PrismaTelephoneMapper.toPrisma(_employee);
     const employee = PrismaEmployeeMapper.toPrisma(_employee);
@@ -30,6 +30,6 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
     await this.prismaService.funcionarios.create({
       data: raw,
     });
-  */
+  
   }
 }

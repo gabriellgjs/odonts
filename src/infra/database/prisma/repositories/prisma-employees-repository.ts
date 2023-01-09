@@ -52,7 +52,7 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
       data: employee,
     });
 
-    const user = PrismaUserMapper.toPrisma(_employee, createdEmployee.id);
+    const user = await PrismaUserMapper.toPrisma(_employee, createdEmployee.id);
 
     await this.prismaService.usuarios.create({
       data: user,

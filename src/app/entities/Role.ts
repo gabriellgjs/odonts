@@ -1,22 +1,26 @@
+export interface RoleProps {
+  id?: string;
+  name: string;
+}
+
 export class Role {
-  private avaibleRoles = ['dentista', 'secretario', 'proprietario'];
-  private readonly role: string;
+  private props: RoleProps;
 
-  private validateRole(role: string): boolean {
-    return this.avaibleRoles.includes(role);
+  get name(): string {
+    return this.props.name;
   }
 
-  get value(): string {
-    return this.role;
+  get id(): string {
+    return this.props.id;
   }
 
-  constructor(role: string) {
-    const isAvaibleRole = this.validateRole(role);
+  set id(id: string) {
+    this.props.id = id;
+  }
 
-    if (!isAvaibleRole) {
-      throw new Error('Role not found available');
-    }
-
-    this.role = role;
+  constructor(props: RoleProps) {
+    this.props = {
+      ...props,
+    };
   }
 }

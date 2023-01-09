@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Andress } from '../entities/Andress';
 import { Employee } from '../entities/Employee';
-import { Role } from '../entities/Role';
+import { Role, RoleProps } from '../entities/Role';
 import { Telephone } from '../entities/Telephone';
 import { User } from '../entities/User';
 import { EmployeesRepository } from '../repositories/employees-repository';
 
 interface RegisterEmployeeRequest {
-  id: string;
+  id_employee?: string;
+  id_person?: string;
   name: string;
   birthDate: Date;
   rg: string;
@@ -38,7 +39,8 @@ export class RegisterEmployee {
     request: RegisterEmployeeRequest,
   ): Promise<RegisterEmployeeResponse> {
     const {
-      id,
+      id_employee,
+      id_person,
       name,
       birthDate,
       rg,
@@ -58,7 +60,8 @@ export class RegisterEmployee {
     } = request;
 
     const employee = new Employee({
-      id,
+      id_employee,
+      id_person,
       name,
       birthDate,
       rg,
@@ -76,7 +79,7 @@ export class RegisterEmployee {
         email,
         passoword,
       }),
-      role: new Role(role),
+      role: new Role({ name: role }),
       admissionDate,
       shutdownDate,
     });

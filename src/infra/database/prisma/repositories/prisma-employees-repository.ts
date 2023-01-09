@@ -13,23 +13,49 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create(_employee: Employee): Promise<void> {
+    const isAvaibleRole = await this.prismaService.cargos.findFirst({
+      where: {
+        nome: _employee.role.name,
+      },
+    });
+
+    if (!isAvaibleRole) {
+      throw new Error('Emplooye not register, because role not avaible');
+    }
+
+    _employee.role.id = isAvaibleRole.id;
+
     const person = PrismaPersonMapper.toPrisma(_employee);
-    const andress = PrismaAndressMapper.toPrisma(_employee);
-    const telephone = PrismaTelephoneMapper.toPrisma(_employee);
-    const employee = PrismaEmployeeMapper.toPrisma(_employee);
-    const user = PrismaUserMapper.toPrisma(_employee);
 
     const createdPerson = await this.prismaService.pessoas.create({
       data: person,
     });
-    
+
+    const andress = PrismaAndressMapper.toPrisma(_employee, createdPerson.id);
+
     await this.prismaService.enderecos.create({
       data: andress,
     });
 
-    await this.prismaService.funcionarios.create({
-      data: raw,
+    const telephone = PrismaTelephoneMapper.toPrisma(
+      _employee,
+      createdPerson.id,
+    );
+
+    await this.prismaService.telefones.create({
+      data: telephone,
     });
-  
+
+    const employee = PrismaEmployeeMapper.toPrisma(_employee, createdPerson.id);
+
+    const createdEmployee = await this.prismaService.funcionarios.create({
+      data: employee,
+    });
+
+    const user = PrismaUserMapper.toPrisma(_employee, createdEmployee.id);
+
+    await this.prismaService.usuarios.create({
+      data: user,
+    });
   }
 }

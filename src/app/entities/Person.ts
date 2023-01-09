@@ -2,7 +2,7 @@ import { Andress } from './Andress';
 import { Telephone } from './Telephone';
 
 export interface PersonProps {
-  id: string;
+  id_person: string;
   name: string;
   birthDate: Date;
   rg: string;
@@ -15,12 +15,12 @@ export interface PersonProps {
 export abstract class Person {
   protected props: PersonProps;
 
-  get id(): string {
-    return this.props.id;
+  get id_person(): string {
+    return this.props.id_person;
   }
 
-  set id(id: string) {
-    this.props.id = id;
+  set id_person(id_person: string) {
+    this.props.id_person = id_person;
   }
 
   get name(): string {

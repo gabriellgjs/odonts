@@ -3,6 +3,7 @@ import { Role } from './Role';
 import { User } from './User';
 
 export interface EmployeeProps extends PersonProps {
+  id_employee?: string;
   user: User;
   role: Role;
   admissionDate: Date;
@@ -17,6 +18,14 @@ export class Employee extends Person {
     this.props = {
       ...props,
     };
+  }
+
+  get id_employee(): string {
+    return this.props.id_employee;
+  }
+
+  set id_employee(id_employee: string) {
+    this.props.id_employee = id_employee;
   }
 
   get user(): User {

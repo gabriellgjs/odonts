@@ -1,9 +1,12 @@
+import { randomUUID } from 'crypto';
 import { Employee } from 'src/app/entities/Employee';
 
 export class PrismaTelephoneMapper {
-  static toPrisma(telephone: Employee /*| Patient*/) {
+  static toPrisma(telephone: Employee, pessoaId /*| Patient*/) {
     return {
-      telephone: telephone.telephone.value,
+      id: randomUUID(),
+      telefone: telephone.telephone.value,
+      pessoaId: pessoaId,
     };
   }
 }

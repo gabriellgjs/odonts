@@ -1,11 +1,14 @@
+import { randomUUID } from 'crypto';
 import { Employee } from 'src/app/entities/Employee';
 
 export class PrismaEmployeeMapper {
-  static toPrisma(employee: Employee) {
+  static toPrisma(employee: Employee, pessoaId) {
     return {
-      role: employee.role.value,
-      admissionDate: employee.admissionDate,
-      shutdownDate: employee.shutdownDate,
+      id: randomUUID(),
+      dataAdmissao: new Date().toISOString(),
+      dataDesligamento: employee.shutdownDate,
+      cargoId: employee.role.id,
+      pessoaId: pessoaId,
     };
   }
 }

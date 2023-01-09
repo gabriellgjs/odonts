@@ -11,10 +11,29 @@ export class PrismaRolesRepository implements RolesRepository {
   async create(_role: Role): Promise<void> {
     const role = PrismaRoleMapper.toPrisma(_role);
 
-    const createdRole = await this.prismaService.cargos.create({
+    await this.prismaService.cargos.create({
       data: role,
     });
+  }
 
-    console.log('oi', createdRole);
+  async findOneRole(
+    name: string,
+  ): Promise<{ id: string; name: string | null }> {
+    const RoleFinding = await this.prismaService.cargos.findFirst({
+      where: {
+        nome: name,
+      },
+    });
+
+    if (!RoleFinding) {
+      return null;
+    }
+
+    const role = {
+      id: RoleFinding.id,
+      name: RoleFinding.nome,
+    };
+
+    return role;
   }
 }

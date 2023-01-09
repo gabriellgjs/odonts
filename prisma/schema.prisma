@@ -81,7 +81,7 @@ model Pacientes {
 }
 
 model Usuarios {
-    id            String          @id @db.VarChar(72)
+  id            String          @id @db.VarChar(72)
   email           String          @db.VarChar(255)
   senha           String          @db.VarChar(255)
   funcionario     Funcionarios?   @relation(fields: [funcionarioId], references: [id])

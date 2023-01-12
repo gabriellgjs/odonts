@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Employee } from 'src/app/entities/Employee';
+import { User } from 'src/app/entities/User';
 import { EmployeesRepository } from 'src/app/repositories/employees-repository';
 import { PrismaAndressMapper } from '../mappers/prisma-andress-mapper';
 import { PrismaEmployeeMapper } from '../mappers/prisma-employee-mapper';

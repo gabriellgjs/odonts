@@ -1,7 +1,10 @@
-interface UserProps {
+export interface UserProps {
+  id?: string;
+  funcionarioId?: string;
   email: string;
   passoword: string;
 }
+
 export class User {
   private props: UserProps;
 

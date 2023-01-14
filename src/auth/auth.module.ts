@@ -1,15 +1,18 @@
 import { Module } from '@nestjs/common';
-import { PassportModule } from '@nestjs/passport';
-import { UsersRepository } from 'src/app/repositories/users-repository';
+import { JwtModule } from '@nestjs/jwt/dist';
 import { DataBaseModule } from 'src/infra/database/database.module';
-import { PrismaUsersRepository } from 'src/infra/database/prisma/repositories/prisma-users-repository';
-import { HttpModule } from 'src/infra/http/http.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './strategies/local-strategies';
 
 @Module({
-  imports: [DataBaseModule],
+  imports: [
+    DataBaseModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '30d' },
+    }),
+  ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy],
 })

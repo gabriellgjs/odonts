@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { FindOneRole } from 'src/app/use-cases/find-one-role';
 import { RegisterRole } from 'src/app/use-cases/register-role';
-import { AuthRequest } from 'src/auth/models/AuthRequest';
 import { CreateRoleBody } from '../dtos/create-role-body';
 import { RoleViewModel } from '../view-models/role-view-model';
 
@@ -23,7 +22,7 @@ export class RolesController {
   }
 
   @Get(':name')
-  async findOne(@Param() params: AuthRequest) {
+  async findOne(@Param() params) {
     const { name } = params;
 
     const { role } = await this.findOneRole.execute({ name });

@@ -1,7 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UserProps } from 'src/app/entities/User';
+import { Body, Controller, Post } from '@nestjs/common';
 import { RegisterEmployee } from 'src/app/use-cases/register-employee';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { CreateEmployeeBody } from '../dtos/create-employee-body';
 import { EmployeeViewModel } from '../view-models/employee-view-model';
 

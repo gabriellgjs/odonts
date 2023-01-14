@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Role } from '../entities/Role';
 import { RolesRepository } from '../repositories/roles-repository';
 
 export interface FindOneRoleRequest {

@@ -8,8 +8,10 @@ export class PrismaUsersRepository implements UsersRepository {
   constructor(private prismaService: PrismaService) {}
 
   async findByEmail(email: string): Promise<UserProps | undefined> {
-    const data = await this.prismaService.usuarios.findFirst({
-      where: { email },
+    const data = await this.prismaService.usuarios.findUnique({
+      where: {
+        email,
+      },
     });
 
     const user = {

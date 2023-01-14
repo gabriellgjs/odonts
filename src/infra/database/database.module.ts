@@ -23,6 +23,11 @@ import { PrismaUsersRepository } from './prisma/repositories/prisma-users-reposi
       useClass: PrismaUsersRepository,
     },
   ],
-  exports: [RolesRepository, EmployeesRepository, UsersRepository],
+  exports: [
+    RolesRepository,
+    EmployeesRepository,
+    UsersRepository,
+    PrismaService,
+  ],
 })
 export class DataBaseModule {}

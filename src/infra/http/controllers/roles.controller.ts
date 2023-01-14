@@ -1,5 +1,4 @@
-import { Body, Controller, Post, Get, Param } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { FindOneRole } from 'src/app/use-cases/find-one-role';
 import { RegisterRole } from 'src/app/use-cases/register-role';
 import { AuthRequest } from 'src/auth/models/AuthRequest';

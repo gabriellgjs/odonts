@@ -7,7 +7,7 @@ export class PrismaUserMapper {
     return {
       id: randomUUID(),
       email: user.user.email,
-      senha: await bcrypt.hash(user.user.passoword, 10),
+      senha: await bcrypt.hash(user.user.password, 10),
       funcionarioId: employeeId,
     };
   }

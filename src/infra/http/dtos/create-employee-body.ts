@@ -45,5 +45,5 @@ export class CreateEmployeeBody {
   email: string;
 
   @IsNotEmpty()
-  passoword: string;
+  password: string;
 }

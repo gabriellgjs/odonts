@@ -13,7 +13,7 @@ export class UsersController {
     const { user } = await this.findUserByEmail.execute({ email });
     return {
       ...user,
-      passoword: undefined,
+      password: undefined,
     };
   }
 }

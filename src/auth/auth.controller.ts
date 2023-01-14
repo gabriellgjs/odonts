@@ -1,4 +1,10 @@
-import { Controller, Post, HttpStatus, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  HttpStatus,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { HttpCode } from '@nestjs/common/decorators/http/http-code.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -12,7 +18,8 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
-  login() {
+  login(@Request() req) {
+    console.log(req.user);
     return /*this.authService.login(req.user)*/;
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Andress } from '../entities/Andress';
 import { Employee } from '../entities/Employee';
-import { Role, RoleProps } from '../entities/Role';
+import { Role } from '../entities/Role';
 import { Telephone } from '../entities/Telephone';
 import { User } from '../entities/User';
 import { EmployeesRepository } from '../repositories/employees-repository';
@@ -21,7 +21,7 @@ interface RegisterEmployeeRequest {
   state: string;
   gender: string;
   email: string;
-  passoword: string;
+  password: string;
   role: string;
   admissionDate: Date;
   shutdownDate?: Date | null;
@@ -53,7 +53,7 @@ export class RegisterEmployee {
       state,
       gender,
       email,
-      passoword,
+      password,
       role,
       admissionDate,
       shutdownDate,
@@ -77,7 +77,7 @@ export class RegisterEmployee {
       gender,
       user: new User({
         email,
-        passoword,
+        password,
       }),
       role: new Role({ name: role }),
       admissionDate,

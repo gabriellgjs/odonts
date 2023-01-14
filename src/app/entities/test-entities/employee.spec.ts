@@ -23,9 +23,9 @@ describe('Entitie Employee', () => {
       gender: 'masculine',
       user: new User({
         email: 'teste@gmail.com',
-        passoword: '123456',
+        password: '123456',
       }),
-      role: new Role('proprietario'),
+      /*role: new Role('proprietario'),*/
       admissionDate: new Date(),
     });
     expect(employee).toBeTruthy();

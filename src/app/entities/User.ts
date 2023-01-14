@@ -2,15 +2,15 @@ export interface UserProps {
   id?: string;
   funcionarioId?: string;
   email: string;
-  passoword: string;
+  password: string;
 }
 
 export class User {
   private props: UserProps;
 
   constructor(props: UserProps) {
-    const isValidePassoword = this.validatePassoword(props.passoword);
-    if (!isValidePassoword) {
+    const isValidePassword = this.validatePassword(props.password);
+    if (!isValidePassword) {
       throw new Error('Password is incorrect length');
     }
 
@@ -19,8 +19,8 @@ export class User {
     };
   }
 
-  private validatePassoword(passoword: string): boolean {
-    return passoword.length >= 6 && passoword.length <= 20;
+  private validatePassword(password: string): boolean {
+    return password.length >= 6 && password.length <= 20;
   }
 
   get email(): string {
@@ -31,11 +31,11 @@ export class User {
     this.props.email = email;
   }
 
-  get passoword(): string {
-    return this.props.passoword;
+  get password(): string {
+    return this.props.password;
   }
 
-  set passoword(passoword: string) {
-    this.props.passoword = passoword;
+  set password(password: string) {
+    this.props.password = password;
   }
 }

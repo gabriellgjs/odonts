@@ -10,7 +10,7 @@ export class AuthService {
     const user = await this.prismaUsers.findByEmail(email);
 
     if (user) {
-      const isPasswordValid = await bcrypt.compare(password, user.passoword);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
 
       if (isPasswordValid) {
         return {

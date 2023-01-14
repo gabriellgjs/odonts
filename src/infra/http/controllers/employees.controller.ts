@@ -24,7 +24,7 @@ export class EmployeesController {
       admissionDate,
       role,
       email,
-      passoword,
+      password,
     } = body;
 
     const { employee } = await this.registerEmployee.execute({
@@ -42,7 +42,7 @@ export class EmployeesController {
       admissionDate,
       role: role.name,
       email,
-      passoword,
+      password,
     });
 
     return {

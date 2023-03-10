@@ -1,88 +1,6 @@
-/*
-  Warnings:
-
-  - You are about to drop the `andress` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `appointments` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `employees` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `healthplans` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `patients` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `persons` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `roles` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `telephones` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `treatmentonappointment` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `treatments` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `users` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE `andress` DROP FOREIGN KEY `Andress_personId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `appointments` DROP FOREIGN KEY `Appointments_employeeId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `appointments` DROP FOREIGN KEY `Appointments_patientId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `employees` DROP FOREIGN KEY `Employees_personId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `employees` DROP FOREIGN KEY `Employees_roleId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `patients` DROP FOREIGN KEY `Patients_healthPlanId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `patients` DROP FOREIGN KEY `Patients_personId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `telephones` DROP FOREIGN KEY `Telephones_personId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `treatmentonappointment` DROP FOREIGN KEY `TreatmentOnAppointment_appointmentId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `treatmentonappointment` DROP FOREIGN KEY `TreatmentOnAppointment_treatmentId_fkey`;
-
--- DropForeignKey
-ALTER TABLE `users` DROP FOREIGN KEY `Users_employeeId_fkey`;
-
--- DropTable
-DROP TABLE `andress`;
-
--- DropTable
-DROP TABLE `appointments`;
-
--- DropTable
-DROP TABLE `employees`;
-
--- DropTable
-DROP TABLE `healthplans`;
-
--- DropTable
-DROP TABLE `patients`;
-
--- DropTable
-DROP TABLE `persons`;
-
--- DropTable
-DROP TABLE `roles`;
-
--- DropTable
-DROP TABLE `telephones`;
-
--- DropTable
-DROP TABLE `treatmentonappointment`;
-
--- DropTable
-DROP TABLE `treatments`;
-
--- DropTable
-DROP TABLE `users`;
-
 -- CreateTable
 CREATE TABLE `Cargos` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `nome` VARCHAR(100) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -90,7 +8,7 @@ CREATE TABLE `Cargos` (
 
 -- CreateTable
 CREATE TABLE `Tratamentos` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     `duracao_esperada` DATETIME NOT NULL,
 
@@ -99,7 +17,7 @@ CREATE TABLE `Tratamentos` (
 
 -- CreateTable
 CREATE TABLE `PlanosDeSaude` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `nome` VARCHAR(100) NOT NULL,
     `descricao` VARCHAR(100) NOT NULL,
 
@@ -108,29 +26,29 @@ CREATE TABLE `PlanosDeSaude` (
 
 -- CreateTable
 CREATE TABLE `Enderecos` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `rua` VARCHAR(255) NOT NULL,
     `bairro` VARCHAR(100) NOT NULL,
     `cidade` VARCHAR(100) NOT NULL,
     `cep` VARCHAR(50) NOT NULL,
     `estado` VARCHAR(50) NOT NULL,
-    `pessoaId` INTEGER NOT NULL,
+    `pessoaId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Telefones` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `telefone` VARCHAR(20) NOT NULL,
-    `pessoaId` INTEGER NOT NULL,
+    `pessoaId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Pessoas` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `nome` VARCHAR(255) NOT NULL,
     `dataNascimento` DATE NOT NULL,
     `rg` VARCHAR(10) NOT NULL,
@@ -142,40 +60,41 @@ CREATE TABLE `Pessoas` (
 
 -- CreateTable
 CREATE TABLE `Funcionarios` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `dataAdmissao` DATE NOT NULL,
     `dataDesligamento` DATE NULL,
-    `cargoId` INTEGER NOT NULL,
-    `pessoaId` INTEGER NOT NULL,
+    `cargoId` VARCHAR(191) NOT NULL,
+    `pessoaId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Pacientes` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `estadoCivil` VARCHAR(100) NOT NULL,
-    `planoDeSaudeId` INTEGER NOT NULL,
-    `pessoaId` INTEGER NOT NULL,
+    `planoDeSaudeId` VARCHAR(191) NOT NULL,
+    `pessoaId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Usuarios` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(72) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `senha` VARCHAR(255) NOT NULL,
-    `funcionarioId` INTEGER NOT NULL,
+    `funcionarioId` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Usuarios_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Agendamentos` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `pacienteId` INTEGER NOT NULL,
-    `funcionarioId` INTEGER NOT NULL,
+    `id` VARCHAR(72) NOT NULL,
+    `pacienteId` VARCHAR(191) NOT NULL,
+    `funcionarioId` VARCHAR(191) NOT NULL,
     `agendadoPara` DATETIME NOT NULL,
     `duracaoAgendamento` DATETIME NULL,
 
@@ -184,8 +103,8 @@ CREATE TABLE `Agendamentos` (
 
 -- CreateTable
 CREATE TABLE `TratamentoAgendamento` (
-    `agendamentoId` INTEGER NOT NULL,
-    `tratamentoId` INTEGER NOT NULL,
+    `agendamentoId` VARCHAR(191) NOT NULL,
+    `tratamentoId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`agendamentoId`, `tratamentoId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

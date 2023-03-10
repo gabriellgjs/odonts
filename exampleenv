@@ -1,0 +1,2 @@
+DATABASE_URL = is a url this connetion a database mysql
+JWT_SECRET = is a password for generating a JWT token
